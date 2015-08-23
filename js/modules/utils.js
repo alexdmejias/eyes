@@ -53,7 +53,8 @@ function Utils(cx, canvas) {
     H: canvas.height,
     HW: canvas.width / 2,
     HH: canvas.height / 2,
-    ellipse: function(x, y, r) {
+    ellipse: function(x, y, r, opts) {
+      var opts = opts || {};
       this.cx.beginPath();
       this.cx.arc(x, y, r, 0, 2 * Math.PI, false);
       this.cx.fill();
@@ -67,6 +68,29 @@ function Utils(cx, canvas) {
       } else {
         return val;
       }
+    },
+
+    merge: function() {
+      var obj, name, copy,
+        target = arguments[0] || {},
+        i = 1,
+        length = arguments.length;
+
+      for (; i < length; i++) {
+        if ((obj = arguments[i]) != null) {
+          for (name in obj) {
+            copy = obj[name];
+
+            if (target === copy) {
+              continue;
+            } else if (copy !== undefined) {
+              target[name] = copy;
+            }
+          }
+        }
+      }
+
+      return target;
     }
   }
 };

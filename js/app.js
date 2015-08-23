@@ -5,42 +5,69 @@ var canvas = document.getElementById('canvas')
   , utils
 ;
 
-var WIDTH = canvas.width
-  , HEIGHT = canvas.height
+var WIDTH = function() { return canvas.width}
+  , HEIGHT = function(){return canvas.height}
+  , eyes = []
   , left
   , right
   , mousePos = {x: 0, y: 0}
 ;
 
 function setup() {
-  console.log('setup');
-  canvas.height = 300;
-  canvas.width = 600;
   utils = require('utils')(cx, canvas);
-
-  var eyeSize = 100;
-
-  left = new Eye(cx, canvas, {x: 200, y: 100, size: eyeSize});
-  right = new Eye(cx, canvas, {x: 400, y: 100, size: eyeSize});
+  //  draw the first eye
+  eyes.push(new Eye(cx, canvas, {x: 300, y: 300}) );
 }
 
 function draw() {
   utils.clear();
 
-  left.update(mousePos);
-  right.update(mousePos);
+  cx.fillStyle = '#000';
+  cx.fillRect(0, 0, utils.W, utils.H);
 
-  left.display();
-  right.display();
+  for(var i = 0; i < eyes.length; i++) {
+    eyes[i].update(mousePos);
+    eyes[i].display();
+  }
 
   window.requestAnimationFrame(draw);
+}
+
+function deleteEye(index) {
+  if (eyes[index]) {
+    eyes.splice(index, 1);
+  }
 }
 
 canvas.addEventListener('mousemove', function(event) {
   mousePos = utils.getMousePos(event);
 });
 
+canvas.addEventListener('keydown', function(event) {
+  console.log(event.keyCode)
+});
+
+document.addEventListener('keydown', function(event) {
+  console.log('pressed', event.keyCode);
+  if (event.keyCode === 32) { // space
+    eyes = [];
+  } else if (event.keyCode === 8) { //back space
+    deleteEye(eyes.length - 1);
+  }
+
+}, false);
+
+canvas.addEventListener('click', function() {
+  eyes.push(new Eye(cx, canvas, {x: mousePos.x, y: mousePos.y}) );
+}, false);
+
 (function() {
-  setup();
-  window.requestAnimationFrame(draw);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  if (canvas.getContext) {
+    setup();
+    window.requestAnimationFrame(draw);
+  }
+
 }());
