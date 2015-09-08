@@ -52,7 +52,7 @@ document.addEventListener('keydown', function(event) {
   console.log('pressed', event.keyCode);
   if (event.keyCode === 32) { // space
     eyes = [];
-  } else if (event.keyCode === 8) { //back space
+  } else if (event.keyCode === 68) { //back space
     deleteEye(eyes.length - 1);
   }
 
