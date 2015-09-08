@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Eyes</title>
   <style>
+  /* yeah i'm gonna put this here*/
     html, body {
       overflow: hidden;
     }
@@ -11,9 +12,31 @@
       margin: 0;
       padding: 0;
     }
+    .notification {
+      opacity: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: white;
+      transition: opacity 1s;
+    }
+    .notification.hide {
+      opacity: 0;
+    }
+    ul {
+      padding: 10px;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
+  <div class="notification">
+    <ul>
+      <li><b>Space</b> - Clear</li>
+      <li><b>Backspace</b> - Remove</li>
+      <li><b>Click</b> - Add </li>
+    </ul>
+  </div>
   <canvas id="canvas"></canvas>
 
   <script src="js/app.bundle.js"></script>

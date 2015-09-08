@@ -39,12 +39,13 @@ function deleteEye(index) {
   }
 }
 
+function removeNotification() {
+  var notification =document.getElementsByClassName('notification')[0];
+  notification.classList.add('hide');
+}
+
 canvas.addEventListener('mousemove', function(event) {
   mousePos = utils.getMousePos(event);
-});
-
-canvas.addEventListener('keydown', function(event) {
-  console.log(event.keyCode)
 });
 
 document.addEventListener('keydown', function(event) {
@@ -64,6 +65,8 @@ canvas.addEventListener('click', function() {
 (function() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
+  setTimeout(removeNotification, 5000);
 
   if (canvas.getContext) {
     setup();
